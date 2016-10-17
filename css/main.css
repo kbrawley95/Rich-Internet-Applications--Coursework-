@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Bungee+Inline|Open+Sans|Oswald|Roboto|Trirong');
+
+/* Main Body (General Ruleset)
+==================================================
+*/
+
+html,body {
+  height:100%;
+  font-family: 'Roboto', sans-serif;
+}
+
+.carousel-inner,.carousel,.item,.container,.fill {
+  height:100%;
+  width:100%;
+  background-position:center center;
+}
+
+/* Fixed Top (Responsive) Navigation
+==================================================
+*/
+
+#mainNavContainer{
+  background-color: #DCDFE1
+}
+
+.navbar-inverse .navbar-nav>li>a, .navbar-inverse .navbar-brand{
+  font-size: 18px;
+  color: #000000;
+}
+
+/* Carrousel
+==================================================
+*/
