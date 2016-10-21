@@ -34,9 +34,17 @@ html,body {
 ==================================================
 */
 .carousel-caption {
-  top: 30%;
+  top: 20%;
   right: 20%;
   left: 20%;
+  font-size: 22px;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+.carousel-caption a {
+  color: red;
+  text-shadow: 600;
+  text-shadow: 2px 2px 4px #000000;
 }
 
 /*Section (General Settings)

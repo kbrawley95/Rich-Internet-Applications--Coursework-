@@ -1,0 +1,51 @@
+[
+  {
+    "name":"Riverside Museum",
+    "address":"100 Pointhouse Place",
+    "town:":"Glasgow",
+    "postcode":"G3 8RS",
+    "website":"http://www.glasgowlife.org.uk/museums/riverside/Pages/default.aspx"
+  },
+  {
+    "name":"Kelvingrove Art Gallery and Museum",
+    "address":"Argyle Street",
+    "town:":"Glasgow",
+    "postcode":"G3 8AG",
+    "website":"http://www.glasgowlife.org.uk/museums/kelvingrove/Pages/default.aspx"
+  },
+  {
+    "name":"The Burrell Collection",
+    "address":"2060 Pollokshaws Road",
+    "town:":"Glasgow",
+    "postcode":"G43 1AT",
+    "website":"http://www.glasgowlife.org.uk/museums/burrell-collection/Pages/default.aspx"
+  },
+  {
+    "name":"St Mungo Museum of Religious Life & Art",
+    "address":"2 Castle Street",
+    "town:":"Glasgow",
+    "postcode":"G4 0RH",
+    "website":"http://www.glasgowlife.org.uk/museums/st-mungos/Pages/default.aspx"
+  },
+  {
+    "name":"People's Palace",
+    "address":"Glasgow Green",
+    "town:":"Glasgow",
+    "postcode":"G40 1AT",
+    "website":"http://www.glasgowlife.org.uk/museums/peoples-palace/Pages/default.aspx"
+  },
+  {
+    "name":"Gallery of Modern Art",
+    "address":"Royal Exchange Square",
+    "town:":"Glasgow",
+    "postcode":"G1 3AH",
+    "website":"http://www.glasgowlife.org.uk/museums/GoMA/Pages/default.aspx"
+  },
+  {
+    "name":"Scotland Street School Museum",
+    "address":"225 Scotland Street",
+    "town:":"Glasgow",
+    "postcode":"G5 8QB",
+    "website":"http://www.glasgowlife.org.uk/museums/scotland-street/Pages/default.aspx"
+  }
+]
