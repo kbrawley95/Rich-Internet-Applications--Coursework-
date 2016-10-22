@@ -31,8 +31,15 @@ html,body {
   text-shadow: 2px 2px 4px #000000;
 }
 
+.navbar-inverse .navbar-nav>li>a:hover{
+  color: #1976d2;
+}
+
 .navbar-brand{
   font-weight: 700;
+}
+.navbar-brand>span:hover{
+  color:#1976d2;
 }
 
 /* Carrousel
@@ -86,6 +93,23 @@ html,body {
   padding: 0 20px;
   padding-bottom: 10px;
   border-bottom: 2px dotted #CCC;
+
+  -webkit-animation: carouselAnim 2s;
+  -moz-animation: carouselAnim 2s;
+  animation: carouselAnim 2s;
+}
+
+@-webkit-keyframes carouselAnim{
+  0% {opacity: : 0.3; }
+  100% {opacity: : 1.0; }
+}
+@-moz-keyframes carouselAnim{
+  0% {opacity: : 0.3; }
+  100% {opacity: : 1.0; }
+}
+@keyframes carouselAnim{
+  0% {opacity: : 0.3; }
+  100% {opacity: : 1.0; }
 }
 
 
