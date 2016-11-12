@@ -20,8 +20,11 @@ $('#search').keyup(function(){
       }
     });
     output+='</ul>';
-    $('.carousel-caption').html(output);
+    for (int i)
+    $('.carousel-inner').html(output);
   });
+
+
 
 })
 
