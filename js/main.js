@@ -1,4 +1,8 @@
 var previousContent=$( ".carousel-caption" ).html();
+
+var museum_url = "http://localhost/museums.php";
+var keywords_url = "http://localhost/keyterms.php";
+
 console.log(previousContent);
 
 $('#search').keyup(function(){
@@ -28,14 +32,18 @@ $('#search').keyup(function(){
 function loadResults(){
   $.getJSON('./data/museums.json', function(data)
   {
-    var output='<ul class="searchresults">';
+    var output='<div class="searchresults">';
     $.each(data, function(key, val){
-        output += '<li>';
+        output += '<div class="museum-item">';
         output += '<a href="'+val.website+'">' + val.name +'</a>';
+
+          output += '<div class="museum-image">'
+          output += '<img src="./images/museum.png">';
+          output += '</div>';
         output += '<p>'+val.address+'</p>';
-        output += '</li>';
+        output += '</div>';
     });
-    output+='</ul>';
+    output+='</div>';
     $('.carousel-caption').html(output);
   });
 }
