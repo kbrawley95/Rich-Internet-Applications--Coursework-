@@ -1,15 +1,32 @@
 //On load load default content
 $(document).ready(function(){
+  console.log("ready");
     initialSetup();
-    console.log("ready");
+    var names =[
+      "Bob",
+      "Jim",
+      "Jack",
+      "Ann",
+      "Ab",
+      "Ab",
+      "Ab",
+      "Ab",
+
+    ];
+    $( "#search" ).autocomplete({
+      source: names
+    });
+
 });
 
 var museum_data = "./museums.php";
 var keywords_data = "./keyterms.php";
 var image_data="./images/";
+var term_id="";
 
 function initialSetup(){
   configureCarousel();
+  configureSearchTerms();
 
 }
 
@@ -101,10 +118,28 @@ function displayMuseumPage(){
         output += "</p>";
         output += "<p>";
         output+= '</div>';
+
+        output+="<br/>";
+        output+="<br/>";
+
+        output += '<button onClick="initialSetup();">Go Back</button>';
         $('.carousel-caption').css('top', '20%');
         $('#'+index).empty().append(output);
 
         output="";
+      });
+  });
+
+}
+
+function configureSearchTerms(){
+  $.getJSON(keywords_data, function(data){
+    var output="";
+      /*optional stuff to do after success */
+      $(data.keyterms).each(function(index, value){
+        term_id=value.term_id;
+        output+='<button class="dropdown-item" onClick="filterByTerm('+term_id+')">'+value.term+'</button>';
+        $('.dropdown-menu').empty().append(output);
       });
   });
 

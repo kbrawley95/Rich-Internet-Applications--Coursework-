@@ -19,7 +19,8 @@ html,body {
 
 button, input, select, textarea {
   background-color: black;
-  border-radius: 5px solid black;
+  border-radius: 5px;
+
 
 }
 
@@ -30,6 +31,21 @@ button, input, select, textarea {
 ==================================================
 */
 
+.input-group-btn:first-child>.btn, .input-group-btn:first-child>.btn-group{
+  height: 52px;
+  margin-right: 1px;
+  color: #ffffff;
+}
+.dropdown-item{
+  display: block;
+  text-decoration: none;
+  background-color: white;
+  border: none;
+}
+.dropdown-item:hover{
+  text-decoration: none;
+  color: blue;
+}
 #mainNavContainer{
   background-color: transparent;
   margin-bottom: -300px;
@@ -61,6 +77,10 @@ button, input, select, textarea {
   width: 50%;
   text-align: center;
 
+}
+.ui-menu{
+  z-index:10;
+  padding-top: 15px;
 }
 
 #searchForm input{
