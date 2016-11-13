@@ -2,20 +2,6 @@
 $(document).ready(function(){
   console.log("ready");
     initialSetup();
-    var names =[
-      "Bob",
-      "Jim",
-      "Jack",
-      "Ann",
-      "Ab",
-      "Ab",
-      "Ab",
-      "Ab",
-
-    ];
-    $( "#search" ).autocomplete({
-      source: names
-    });
 
 });
 
@@ -62,31 +48,54 @@ function configureCarousel(){
 
 function loadMuseumInfo(){
   var output ='';
-
+  var terms=[];
   $.getJSON(museum_data, function(data){
 
-
     $(data.museums).each(function(index, value){
+
+      terms[index]=value.museum_name;
       output+='<a href="'+value.website+'"><h1>'+value.museum_name+'</h1></a>';
       output+='<p>'+value.museum_description+'</p>';
       output+= '<button onClick="displayMuseumPage();">Learn More</button>';
       $('#'+index).empty().append(output);
       output="";
+
+      $( "#search" ).autocomplete({
+        source: terms,
+        autoFocus: true,
+        select: function( event, ui ) {
+          jQuery.each(terms, function(index, item) {
+              // do something with `item` (or `this` is also `item` if you like)
+              if(terms[index]==ui.item.value){
+                console.log("Alright, alright, alright");
+              }
+          });
+        }
+      });
+
     });
 
   });
 
 }
 
-function displayMuseumPage(){
+function displayMuseumPage(newValue){
 
   var output ='';
 
   $.getJSON(museum_data, function(data){
       /*optional stuff to do after success */
       $(data.museums).each(function(index, value){
+        //console.log(index);
+
         output+='<div class="page">';
-        output += "<h1>" + value.museum_name + "</h1>";
+        if(value.museum_name===newValue){
+          output += "<h1>" + newValue+ "</h1>"
+        }
+        else
+        {
+          output += "<h1>" + value.museum_name + "</h1>";
+        }
         output += "<h6><a href='"+value.website+"'>"+value.website+"</a></h6>";
 
         output+="<hr/>";
@@ -135,12 +144,20 @@ function displayMuseumPage(){
 function configureSearchTerms(){
   $.getJSON(keywords_data, function(data){
     var output="";
+
       /*optional stuff to do after success */
       $(data.keyterms).each(function(index, value){
         term_id=value.term_id;
+
         output+='<button class="dropdown-item" onClick="filterByTerm('+term_id+')">'+value.term+'</button>';
         $('.dropdown-menu').empty().append(output);
+
+
+
       });
   });
+
+
+
 
 }

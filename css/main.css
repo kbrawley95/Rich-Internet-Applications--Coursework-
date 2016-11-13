@@ -79,7 +79,7 @@ button, input, select, textarea {
 
 }
 .ui-menu{
-  z-index:10;
+  z-index:10000;
   padding-top: 15px;
 }
 
