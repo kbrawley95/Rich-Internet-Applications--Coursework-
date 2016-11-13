@@ -17,6 +17,14 @@ html,body {
   background-color: black;
 }
 
+button, input, select, textarea {
+  background-color: black;
+  border-radius: 5px solid black;
+
+}
+
+
+
 
 /* Fixed Top (Responsive) Navigation
 ==================================================
@@ -27,7 +35,7 @@ html,body {
   margin-bottom: -300px;
 }
 
-.navbar-inverse .navbar-nav>li>a, .navbar-inverse .navbar-brand{
+.navbar-nav>li>a, .navbar-inverse .navbar-brand{
   font-size: 18px;
   color: #FFFFFF;
   text-shadow: 2px 2px 4px #000000;
@@ -42,6 +50,10 @@ html,body {
 }
 .navbar-brand>span:hover{
   color:#1976d2;
+}
+
+.navbar, .navbar-inverse, .navbar-fixed-top, .z-depth-1{
+  background-color: #512da8;
 }
 
 #searchForm{
@@ -81,7 +93,7 @@ html,body {
 
 }
 .carousel-caption {
-  top: 20%;
+  top: 45%;
   right: 20%;
   left: 20%;
   font-size: 22px;
@@ -101,11 +113,11 @@ html,body {
 }*/
 
 .carousel-caption a {
-  color: 1976d2;
+  color:#fff;
   text-shadow: 600;
   font-weight: 700;
-  font-size: 24px;
-  text-shadow: 11px 12px 14px #212121;
+  font-size: 20px;
+  text-shadow: 11px 12px 14px #000000;
 }
 .carousel-caption a:hover {
   color: #FFFFFF;
@@ -227,4 +239,17 @@ footer p{
     filter: alpha(opacity=50);
     opacity: .5;
     display: none;
+}
+
+/* Page Specific Styling
+==================================================
+*/
+.page {
+    top: 20%;
+    right: 20%;
+    left: 20%;
+    font-size: 22px;
+    text-shadow: 2px 2px 4px #000000;
+    z-index: 99999;
+
 }

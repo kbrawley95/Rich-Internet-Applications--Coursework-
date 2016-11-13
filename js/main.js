@@ -8,16 +8,16 @@ var museum_data = "./museums.php";
 var keywords_data = "./keyterms.php";
 var image_data="./images/";
 
-
 function initialSetup(){
   configureCarousel();
-  loadMuseumInfo();
+
 }
 
 function configureCarousel(){
+  var output ='';
+
   $.getJSON(museum_data, function(data){
       /*optional stuff to do after success */
-      var output ='';
       $(data.museums).each(function(index, value){
         if(index==0){
           output+='<div class="item active">';
@@ -25,11 +25,12 @@ function configureCarousel(){
         else{
             output+='<div class="item">';
         }
-          output += '<img src="' +image_data + value.images[index].url + '"'+' alt='+ value.museum_name +' />';
+          output += '<img src="' +image_data + value.images[index].url + '"'+' alt="'+ value.museum_name +' />';
           output+= '<div class="container capContent">';
           output+= '<div class="carousel-caption" id="'+index+'">';
           output+= '<h1>Example 2</h1>';
           output+= '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>';
+
           output+= '</div>';
           output+= '</div>';
           output+= '</div>';
@@ -38,20 +39,73 @@ function configureCarousel(){
       $('.carousel-inner').empty().append(output);
   });
 
+  loadMuseumInfo();
+
 }
 
-
 function loadMuseumInfo(){
+  var output ='';
+
   $.getJSON(museum_data, function(data){
-    var output ='';
 
+
+    $(data.museums).each(function(index, value){
+      output+='<a href="'+value.website+'"><h1>'+value.museum_name+'</h1></a>';
+      output+='<p>'+value.museum_description+'</p>';
+      output+= '<button onClick="displayMuseumPage();">Learn More</button>';
+      $('#'+index).empty().append(output);
+      output="";
+    });
+
+  });
+
+}
+
+function displayMuseumPage(){
+
+  var output ='';
+
+  $.getJSON(museum_data, function(data){
+      /*optional stuff to do after success */
       $(data.museums).each(function(index, value){
-          output+='<h1>'+value.museum_name+'</h1>';
-          output+='<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>';
-          $('#'+index).empty().append(output);
-          output="";
-      });
+        output+='<div class="page">';
+        output += "<h1>" + value.museum_name + "</h1>";
+        output += "<h6><a href='"+value.website+"'>"+value.website+"</a></h6>";
 
+        output+="<hr/>";
+
+        output += "<p>";
+        output += "<h2>Description</h2>";
+        output += value.museum_description;
+        output += "</p>";
+
+        output+="<hr/>";
+
+        output += "<p>";
+        output += "<h2>Address</h2>";
+        output += value.address + "<br />";
+        output += value.postcode;
+        output += "</p>";
+
+        output+="<hr/>";
+
+        output += "<p>";
+        output += "<h2>Opening Hours</h2>";
+        output += "Monday: " + value.opening_hours.Monday + "<br />";
+        output += "Tuesday: " + value.opening_hours.Tuesday + "<br />";
+        output += "Wednesday: " + value.opening_hours.Wednesday + "<br />";
+        output += "Thursday: " + value.opening_hours.Thursday + "<br />";
+        output += "Friday: " + value.opening_hours.Friday + "<br />";
+        output += "Saturday: " + value.opening_hours.Saturday + "<br />";
+        output += "Sunday: " + value.opening_hours.Sunday + "<br />";
+        output += "</p>";
+        output += "<p>";
+        output+= '</div>';
+        $('.carousel-caption').css('top', '20%');
+        $('#'+index).empty().append(output);
+
+        output="";
+      });
   });
 
 }
