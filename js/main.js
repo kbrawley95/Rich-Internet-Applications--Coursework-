@@ -28,7 +28,7 @@ function configureCarousel(){
         else{
             output+='<div class="item">';
         }
-          output += '<img src="' +image_data + value.images[index].url + '"'+' alt="'+ value.museum_name +' />';
+          output += '<img src="' +image_data + value.images[index].url + '"'+' class="image-responsive" alt="'+ value.museum_name +' />';
           output+= '<div class="container capContent">';
           output+= '<div class="carousel-caption" id="'+index+'">';
           output+= '<h1>Example 2</h1>';
@@ -47,13 +47,26 @@ function configureCarousel(){
 }
 
 function loadMuseumInfo(){
+
+  $('.carousel').carousel({interval: 5000});
+
+  $(document).on('mouseleave', '.carousel', function() {
+
+      $(this).carousel('cycle');
+  });
+
   var output ='';
   var terms=[];
+  var ids=[];
   $.getJSON(museum_data, function(data){
 
     $(data.museums).each(function(index, value){
-
       terms[index]=value.museum_name;
+      ids[index]=value.museum_id;
+      console.log("JSON VALUE: "+value);
+      var newValue=data.museums;
+
+    //  console.log(terms);
       output+='<a href="'+value.website+'"><h1>'+value.museum_name+'</h1></a>';
       output+='<p>'+value.museum_description+'</p>';
       output+= '<button onClick="displayMuseumPage();">Learn More</button>';
@@ -67,7 +80,7 @@ function loadMuseumInfo(){
           jQuery.each(terms, function(index, item) {
               // do something with `item` (or `this` is also `item` if you like)
               if(terms[index]==ui.item.value){
-                console.log("Alright, alright, alright");
+                displayMuseumPage(newValue[index], true);
               }
           });
         }
@@ -79,23 +92,36 @@ function loadMuseumInfo(){
 
 }
 
-function displayMuseumPage(newValue){
+function displayMuseumPage(newValue, isSelected){
 
   var output ='';
+  var newLat;
+  var newLong;
+  console.log(newValue);
+
+  $('.carousel').carousel({interval: false, pause: 'hover'});
+
+  $(document).on('mouseleave', '.carousel', function() {
+
+      $(this).carousel('pause');
+  });
+
 
   $.getJSON(museum_data, function(data){
       /*optional stuff to do after success */
       $(data.museums).each(function(index, value){
-        //console.log(index);
 
-        output+='<div class="page">';
-        if(value.museum_name===newValue){
-          output += "<h1>" + newValue+ "</h1>"
+        if(isSelected){
+          value=newValue;
+          //console.log(index);
         }
-        else
-        {
-          output += "<h1>" + value.museum_name + "</h1>";
-        }
+        newLat=parseFloat(value.lat);
+        newLong=parseFloat(value.long);
+
+
+        output +='<div class="page">';
+        output += "<h1>" + value.museum_name + "</h1>";
+
         output += "<h6><a href='"+value.website+"'>"+value.website+"</a></h6>";
 
         output+="<hr/>";
@@ -126,15 +152,22 @@ function displayMuseumPage(newValue){
         output += "Sunday: " + value.opening_hours.Sunday + "<br />";
         output += "</p>";
         output += "<p>";
+
+
+        output+="<hr/>";
+
+        output += "<p>";
+        output += "<h2>Map View</h2>";
+        output +='<div class="outerMapDiv"><div id = "map_canvas'+index+'" class="googleMap" style="width: 80%;height: 400px;"></div></div>';
+        output += "</p>";
+
+
         output+= '</div>';
 
-        output+="<br/>";
-        output+="<br/>";
-
-        output += '<button onClick="initialSetup();">Go Back</button>';
-        $('.carousel-caption').css('top', '20%');
+        $('.carousel-caption').css({top: '10%', height :'100%'});
         $('#'+index).empty().append(output);
 
+        initMap(newLat, newLong,index);
         output="";
       });
   });
@@ -152,12 +185,22 @@ function configureSearchTerms(){
         output+='<button class="dropdown-item" onClick="filterByTerm('+term_id+')">'+value.term+'</button>';
         $('.dropdown-menu').empty().append(output);
 
-
-
       });
   });
+}
 
+function initMap(newLat, newLong,index){
+  var uluru={lat: newLat, lng: newLong};
+  console.log(uluru);
+  var map=new google.maps.Map(document.getElementById('map_canvas'+index),{
+    zoom: 15,
+    center: uluru
+  });
 
+  var marker = new google.maps.Marker({
+    position: uluru,
+    map: map
+  });
 
-
+  $()
 }
