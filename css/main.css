@@ -183,10 +183,15 @@ button, input, select, textarea {
   margin:0px auto;
    text-align:center;
    padding-bottom: 200px;
+
 }
 .googleMap{
+  width: 100%;
+  height: 100%;
   margin:0px auto;
   display:inline-block;
+  border: 10px solid white;
+  border-radius: 10px;
 
 }
 

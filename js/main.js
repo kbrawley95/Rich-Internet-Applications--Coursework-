@@ -1,14 +1,19 @@
-//On load load default content
-$(document).ready(function(){
-  console.log("ready");
-    initialSetup();
 
-});
-
+/* Page Setup
+==================================================
+*/
 var museum_data = "./museums.php";
 var keywords_data = "./keyterms.php";
 var image_data="./images/";
 var term_id="";
+
+//On load load default content
+$(document).ready(function(){
+  console.log("ready");
+  initialSetup();
+
+});
+
 
 function initialSetup(){
   configureCarousel();
@@ -16,11 +21,10 @@ function initialSetup(){
 
 }
 
-function configureCarousel(){
+function configureCarousel(selectedPage, newValue){
   var output ='';
 
   $.getJSON(museum_data, function(data){
-      /*optional stuff to do after success */
       $(data.museums).each(function(index, value){
         if(index==0){
           output+='<div class="item active">';
@@ -28,15 +32,27 @@ function configureCarousel(){
         else{
             output+='<div class="item">';
         }
+
+        if(selectedPage==true)
+        {
+          output += '<img src="' +image_data + newValue.images[index].url + '"'+' class="image-responsive" alt="'+ newValue.museum_name +' />';
+          output+= '<div class="container capContent">';
+          output+= '<div class="carousel-caption" id="'+index+'">';
+          output+= '<h1><i>Refresh Page</i></h1>';
+          output+= '</div>';
+          output+= '</div>';
+          output+= '</div>';
+        }
+        else{
           output += '<img src="' +image_data + value.images[index].url + '"'+' class="image-responsive" alt="'+ value.museum_name +' />';
           output+= '<div class="container capContent">';
           output+= '<div class="carousel-caption" id="'+index+'">';
-          output+= '<h1>Example 2</h1>';
-          output+= '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>';
+          output+= '<h1><i>Refresh Page</i></h1>';
+          output+= '</div>';
+          output+= '</div>';
+          output+= '</div>';
 
-          output+= '</div>';
-          output+= '</div>';
-          output+= '</div>';
+        }
 
       });
       $('.carousel-inner').empty().append(output);
@@ -80,6 +96,7 @@ function loadMuseumInfo(){
           jQuery.each(terms, function(index, item) {
               // do something with `item` (or `this` is also `item` if you like)
               if(terms[index]==ui.item.value){
+                configureCarousel(true, newValue[index]);
                 displayMuseumPage(newValue[index], true);
               }
           });
@@ -91,7 +108,9 @@ function loadMuseumInfo(){
   });
 
 }
-
+/* Page Specific Content Generation
+==================================================
+*/
 function displayMuseumPage(newValue, isSelected){
 
   var output ='';
@@ -173,7 +192,9 @@ function displayMuseumPage(newValue, isSelected){
   });
 
 }
-
+/* Search Bar Filtering
+==================================================
+*/
 function configureSearchTerms(){
   $.getJSON(keywords_data, function(data){
     var output="";
@@ -185,9 +206,19 @@ function configureSearchTerms(){
         output+='<button class="dropdown-item" onClick="filterByTerm('+term_id+')">'+value.term+'</button>';
         $('.dropdown-menu').empty().append(output);
 
+
       });
   });
+
 }
+
+function filterByTerm(){
+
+}
+
+/* Google Map Implementation
+==================================================
+*/
 
 function initMap(newLat, newLong,index){
   var uluru={lat: newLat, lng: newLong};
