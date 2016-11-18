@@ -21,11 +21,17 @@ function initialSetup(){
 
 }
 
-function configureCarousel(selectedPage, newValue){
+function configureCarousel(selectedPage){
   var output ='';
+  var staticOutput="";
 
   $.getJSON(museum_data, function(data){
       $(data.museums).each(function(index, value){
+        staticOutput="";
+
+        staticOutput+='<div class="col-md-12 text-center" id="static'+index+'">';
+        staticOutput+='</div>';
+
         if(index==0){
           output+='<div class="item active">';
         }
@@ -35,7 +41,7 @@ function configureCarousel(selectedPage, newValue){
 
         if(selectedPage==true)
         {
-          output += '<img src="' +image_data + newValue.images[index].url + '"'+' class="image-responsive" alt="'+ newValue.museum_name +' />';
+          output += '<img src="' +image_data + value.images[index].url + '"'+' class="image-responsive" alt="'+ value.museum_name +' />';
           output+= '<div class="container capContent">';
           output+= '<div class="carousel-caption" id="'+index+'">';
           output+= '<h1><i>Refresh Page</i></h1>';
@@ -56,6 +62,8 @@ function configureCarousel(selectedPage, newValue){
 
       });
       $('.carousel-inner').empty().append(output);
+      $('.main-text').empty().append(staticOutput);
+
   });
 
   loadMuseumInfo();
@@ -108,6 +116,8 @@ function loadMuseumInfo(){
   });
 
 }
+
+
 /* Page Specific Content Generation
 ==================================================
 */
@@ -136,7 +146,6 @@ function displayMuseumPage(newValue, isSelected){
         }
         newLat=parseFloat(value.lat);
         newLong=parseFloat(value.long);
-
 
         output +='<div class="page">';
         output += "<h1>" + value.museum_name + "</h1>";
@@ -183,10 +192,11 @@ function displayMuseumPage(newValue, isSelected){
 
         output+= '</div>';
 
-        $('.carousel-caption').css({top: '10%', height :'100%'});
-        $('#'+index).empty().append(output);
+        //$('.carousel-caption').css({top: '10%', height :'100%'});
+        //$('#'+index).empty();
+        $('#static'+index).empty().append(output);
 
-        initMap(newLat, newLong,index);
+        //initMap(newLat, newLong,index);
         output="";
       });
   });
