@@ -73,6 +73,11 @@ button, input, select, textarea {
 .navbar, .navbar-inverse, .navbar-fixed-top, .z-depth-1{
   background-color: #512da8;
 }
+.dropdown-menu{
+  height: auto;
+   max-height: 200px;
+   overflow-x: hidden;
+}
 
 #searchForm{
   margin: 0 auto;

@@ -18,11 +18,53 @@ $(document).ready(function(){
 function initialSetup(){
   configureCarousel();
   configureSearchTerms();
+  $( "#search" ).empty();
 
 }
 
+function searchConfigureCarousel(newValue){
+  var output ='';
+  var indictator='';
+
+  $.getJSON(museum_data, function(data){
+      $(data.museums).each(function(index, value){
+        if(index==0){
+          output+='<div class="item active">';
+        }
+        else{
+            output+='<div class="item">';
+        }
+          output += '<img src="' +image_data + newValue.images[index].url + '"'+' class="image-responsive" alt="'+ newValue.museum_name +' />';
+          output+= '<div class="container capContent">';
+          output+= '<div class="carousel-caption" id="'+index+'">';
+          output+= '<h1><i>Refresh Page</i></h1>';
+          output+= '</div>';
+          output+= '</div>';
+          output+= '</div>';
+
+      });
+      $('.carousel-inner').empty().append(output);
+  });
+
+    indictator+= '<li data-target="#myCarousel" data-slide-to="0" class="active"></li>';
+    indictator+= '<li data-target="#myCarousel" data-slide-to="1" ></li>';
+    indictator+= '<li data-target="#myCarousel" data-slide-to="2" ></li>';
+    indictator+= '<li data-target="#myCarousel" data-slide-to="3" ></li>';
+    indictator+= '<li data-target="#myCarousel" data-slide-to="4" ></li>';
+    indictator+= '<li data-target="#myCarousel" data-slide-to="5" ></li>';
+    indictator+= '<li data-target="#myCarousel" data-slide-to="6" ></li>';
+    indictator+= '<li data-target="#myCarousel" data-slide-to="7" ></li>';
+      $('.carousel-indicators').empty().append(indictator);
+  loadMuseumInfo();
+  displayMuseumPage(newValue, true);
+}
+
+
+
+
 function configureCarousel(selectedPage, newValue){
   var output ='';
+  var indictator='';
 
   $.getJSON(museum_data, function(data){
       $(data.museums).each(function(index, value){
@@ -52,11 +94,26 @@ function configureCarousel(selectedPage, newValue){
           output+= '</div>';
           output+= '</div>';
 
+
+
         }
 
       });
       $('.carousel-inner').empty().append(output);
   });
+
+  if(!selectedPage){
+
+    indictator+= '<li data-target="#myCarousel" data-slide-to="0" class="active"></li>';
+    indictator+= '<li data-target="#myCarousel" data-slide-to="1" ></li>';
+    indictator+= '<li data-target="#myCarousel" data-slide-to="2" ></li>';
+    indictator+= '<li data-target="#myCarousel" data-slide-to="3" ></li>';
+    indictator+= '<li data-target="#myCarousel" data-slide-to="4" ></li>';
+    indictator+= '<li data-target="#myCarousel" data-slide-to="5" ></li>';
+    indictator+= '<li data-target="#myCarousel" data-slide-to="6" ></li>';
+    indictator+= '<li data-target="#myCarousel" data-slide-to="7" ></li>';
+      $('.carousel-indicators').empty().append(indictator);
+  }
 
   loadMuseumInfo();
 
@@ -203,7 +260,7 @@ function configureSearchTerms(){
       $(data.keyterms).each(function(index, value){
         term_id=value.term_id;
 
-        output+='<button class="dropdown-item" onClick="filterByTerm('+term_id+')">'+value.term+'</button>';
+        output+='<li class="dropdown-item" onClick="filterByTerm('+term_id+');" >'+value.term+'</button>';
         $('.dropdown-menu').empty().append(output);
 
 
@@ -212,7 +269,53 @@ function configureSearchTerms(){
 
 }
 
-function filterByTerm(){
+function filterByTerm(id){
+  var keyArray;
+  var output="";
+  var newValue;
+  var targetMuseums=new Array();
+  console.log("Hello!");
+  $.getJSON(museum_data, function(data){
+
+    output+= '<div class="container">';
+    output+= '<div class="carousel-caption">';
+
+      /*optional stuff to do after success */
+      $(data.museums).each(function(index, value){
+        term_id=id;
+        keyArray=value.keyterms;
+        for (i = 0; i < keyArray.length; i++) {
+
+          if(term_id==keyArray[i]){
+            targetMuseums.push(value);
+
+          }
+
+        }
+
+
+        });
+
+
+        for(i=0; i<targetMuseums.length; i++){
+          newValue = targetMuseums[i];
+          output+='<div class="col-lg-4">';
+          output+='<h1>'+targetMuseums[i].museum_name+'</h1>';
+          output+='<p>'+targetMuseums[i].museum_description+'</p>';
+          output+= '<button id="catButton"">Learn More</button>';
+
+
+          output+= '</div>';
+        }
+
+        output+= '</div>';
+        output+= '</div>';
+
+        $('.carousel-inner').empty().append(output);
+        $( "catButton" ).on( "click", searchConfigureCarousel(newValue));
+
+      });
+
 
 }
 
@@ -221,6 +324,8 @@ function filterByTerm(){
 */
 
 function initMap(newLat, newLong,index){
+
+
   var uluru={lat: newLat, lng: newLong};
   console.log(uluru);
   var map=new google.maps.Map(document.getElementById('map_canvas'+index),{
@@ -233,5 +338,4 @@ function initMap(newLat, newLong,index){
     map: map
   });
 
-  $()
 }
